@@ -3,8 +3,7 @@ function createUser(userid,username,uniqueid,available = true){
     return {
         userid,
         username,
-        uniqueid,
-        available
+        uniqueid
     }
 }
 

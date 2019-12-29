@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+.Authentication__page{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.Authentication__form__holder{
+    padding-bottom: 10px;
+    width: 30%;
+    border: 1px solid #00ff00;
+}
+
+.select__btn{
+    color: white;
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    font-size: 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+}
+
+.select__menu{
+    border-bottom: 0.2px solid #00ff00;
+}
+
+.active{
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+@media only screen and (max-width: 900px) {
+    .Authentication__form__holder{
+        width: 90%;
+    }
+}

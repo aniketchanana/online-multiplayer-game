@@ -1,0 +1,155 @@
+html,body{
+    height: 100%;
+    /* background-color: black; */
+}
+.test{
+    border: 1px solid black;
+}
+
+.container-fluid{
+    height: 100%;
+}
+.row{
+    height: 50%;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell{
+    height: 120px;
+    color: white;
+    font-size: 60px;
+    background-color: blue;
+    border: 1px solid white;
+}
+
+.messages__side{
+    height: 100%;
+}
+
+.chat__box{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+form{
+    display: flex;justify-content: space-between;
+}
+
+#text__message{
+    width: 100%;
+}
+
+.recieve{
+    /* background-color: red; */
+    display: flex;
+    justify-content: flex-start;
+}
+
+.send{
+    /* background-color: yellow; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.recieve>.message__box,.send>.message__box{
+    padding: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    margin: 0.5rem;
+}
+
+.recieve>.message__box{
+    background-color: #47291d;
+}
+
+.send>.message__box{
+    background-color: #88665a;
+}
+
+#messages{
+    height: 30vh;
+    overflow-y: scroll;
+}
+
+#waiting{
+    background-color: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    color: rgba(0,255,0,0.8);
+}
+
+.none{
+    display: none;
+}
+
+
+/* dark theme mode */
+.container-fluid{
+    background-color: #000;
+    color: white;
+}
+
+.container-fluid .cell{
+    background-color: #fff;
+    color: black;
+    border: 1px solid black;
+}
+
+.container-fluid input{
+    border: 1px solid rgba(0,255,0,0.8);
+    background-color: transparent;
+    color: rgba(0,255,0,0.8);
+    outline: none;
+}
+
+.container-fluid button{
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    border: none;
+    outline: none;
+    background-color:rgba(0,255,0,0.8);
+    padding: 0.5rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    /* border-radius: 100px ; */
+}
+
+.cell{
+    cursor: pointer;
+    user-select: none;
+}
+
+#player1,#player2{
+    padding: 0.5rem;
+}
+
+.active{
+    background-color: rgba(0,255,0,0.6);
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.wait{
+    color: rgba(255,255,255,0.8);
+}
+
+.game__status{
+    background-color: #000;
+}
+
+@media only screen and (max-width:600px){
+    #waiting__message{
+        font-size: 1.6rem;
+    }
+}

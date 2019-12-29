@@ -1,7 +1,11 @@
 let users = [];
 
-function tictactoe(user){
-    users.push(user);
+function tictactoe(newuser){
+    // let res = users.every((user)=>{
+    //     return user.userid !== newuser.userid
+    // })
+    // if(res)
+    users.push(newuser);
 }
 
 function toggleAvailability(index){
