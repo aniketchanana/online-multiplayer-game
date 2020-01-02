@@ -13,44 +13,44 @@ for(let i=0;i<3;i++)
     game.push(["","",""])
 }
 
-function isWinner(feild){
-    // check row wise
+// function isWinner(feild){
+//     // check row wise
 
-    for (let i = 0; i < 3; i++) {
-        if (feild[i][0] === feild[i][1] && feild[i][1] === feild[i][2] && feild[i][0] !== "" && feild[i][1] !== "" && feild[i][2] !== "") {
-            return 0;
-        }
-    }
-    for (let i = 0; i < 3; i++) {
-        if (feild[0][i] === feild[1][i] && feild[1][i] === feild[2][i] &&  feild[0][i] !== "" && feild[1][i] !== "" && feild[2][i] !== "") {
-            return 0;
-        }
-    }
-    if (feild[0][0] === feild[1][1] && feild[1][1] === feild[2][2] && feild[0][0] !== "" && feild[1][1] !== "" && feild[2][2] !== "") {
-        return 0;
-    }
-    if (feild[0][2] === feild[1][1] && feild[1][1] === feild[2][0]  && feild[0][2] !== ""  && feild[1][1] !== ""  && feild[2][0] !== "") {
-        return 0;
-    }
+//     for (let i = 0; i < 3; i++) {
+//         if (feild[i][0] === feild[i][1] && feild[i][1] === feild[i][2] && feild[i][0] !== "" && feild[i][1] !== "" && feild[i][2] !== "") {
+//             return 0;
+//         }
+//     }
+//     for (let i = 0; i < 3; i++) {
+//         if (feild[0][i] === feild[1][i] && feild[1][i] === feild[2][i] &&  feild[0][i] !== "" && feild[1][i] !== "" && feild[2][i] !== "") {
+//             return 0;
+//         }
+//     }
+//     if (feild[0][0] === feild[1][1] && feild[1][1] === feild[2][2] && feild[0][0] !== "" && feild[1][1] !== "" && feild[2][2] !== "") {
+//         return 0;
+//     }
+//     if (feild[0][2] === feild[1][1] && feild[1][1] === feild[2][0]  && feild[0][2] !== ""  && feild[1][1] !== ""  && feild[2][0] !== "") {
+//         return 0;
+//     }
 
-    let count = 0;
-    for(let i=0;i<3;i++)
-    {
-        for(let j=0;j<3;j++)
-        {
-            if(feild[i][j] !== "")
-            count++;
-        }
-    }
+//     let count = 0;
+//     for(let i=0;i<3;i++)
+//     {
+//         for(let j=0;j<3;j++)
+//         {
+//             if(feild[i][j] !== "")
+//             count++;
+//         }
+//     }
 
-    if(count === 9)
-    return 1;
+//     if(count === 9)
+//     return 1;
 
-    return -1;
-    //-1 still playing game
-    //0 win
-    //1 draw
-}
+//     return -1;
+//     //-1 still playing game
+//     //0 win
+//     //1 draw
+// }
 
 function run(){
     if(!playing)
@@ -181,6 +181,18 @@ socket.on("change",(message)=>{
     
 })
 
+socket.on("winner",(message)=>{
+    console.log(message);
+    refreshBoard(message.game)
+    // console.log(message);
+    alert(`${message.winner} is winner`);
+})
+
+socket.on("draw",(message)=>{
+    // console.log(message)
+    refreshBoard(message.game);
+    alert("Game is draw");
+})
 
 function refreshBoard(game__update){
     game = game__update
@@ -205,28 +217,28 @@ function refreshBoard(game__update){
     // console.log(cells)
     // let arr = [[cells[0],cells[1],cells[2]],[cells[3],cells[4],cells[5]],[cells[6],cells[7],cells[8]]]
     document.getElementById("here").appendChild(div);
-    let result = isWinner(game);
-    if(result == 1)
-    {
+    // let result = isWinner(game);
+    // if(result == 1)
+    // {
         // socket.emit("result","Game Draw");
-        alert("Game Draw");
-        window.location.href="/";
-        return ;
-    }
-    else if(result == 0 && turn == false)
-    {
+        // alert("Game Draw");
+        // window.location.href="/";
+        // return ;
+    // }
+    // else if(result == 0 && turn == false)
+    // {
         // socket.emit("result",`${query.username} is winner`);
-        alert(`${query.username} is winner`);
-        window.location.href="/";
-        return ;
-    }
-    else if(result === 0 && turn === true)
-    {
+        // alert(`${query.username} is winner`);
+        // window.location.href="/";
+        // return ;
+    // }
+    // else if(result === 0 && turn === true)
+    // {
         // socket.emit("result",`${window.sessionStorage.getItem("player2name")} is winner`)
-        alert(`${window.sessionStorage.getItem("player1name")} is winner`);
-        window.location.href="/";
-        return ;
-    }
+        // alert(`${window.sessionStorage.getItem("player1name")} is winner`);
+        // window.location.href="/";
+        // return ;
+    // }
 }
 
 function evthandler(e)
@@ -250,13 +262,15 @@ function evthandler(e)
     console.log(game[x][y])
     socket.emit("change",{
         room:window.sessionStorage.getItem("playingroom"),
-        game:game
+        game:game,
+        username:query.username
     })
 }
 
 $(window).bind('beforeunload',function(){
     socket.emit("disconnect","player left");
- });
+});
+
 // window.onbeforeunload = function () {
 //     return false;    
 // }

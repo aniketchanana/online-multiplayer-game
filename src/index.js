@@ -16,7 +16,7 @@ const {allPlayers,addPlayer,getMatch} = require('./utils/allPlayers')
 app.use(express.static(path.join(__dirname,"../build")));
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(express.static(path.join(__dirname,'../build')))
+app.use(express.static(path.join(__dirname,'./public')))
 let RedisStore = require("connect-redis")(session);
 var mongoose = require('mongoose');
 var sessionMiddleware = session({
@@ -162,10 +162,67 @@ io.on("connection",(socket)=>{
     })
 
     socket.on("change",(message)=>{
-        io.to(message.room).emit("change",{game:message.game});
+        let status = isWinner(message.game);
+
+        //-1 still playing game
+        //0 win
+        //1 draw
+        if(status == -1)
+        {
+            io.to(message.room).emit("change",{game:message.game});
+        }
+        else if(status == 0)
+        {
+            io.to(message.room).emit("winner",{game:message.game,winner:message.username})
+        }
+        else if(status == 1)
+        {
+            io.to(message.room).emit("draw",{game:message.game,winner:message.username})
+        }
     })
 })
 
 server.listen(port,()=>{
     console.log("application is runnig at port " + port);
 })
+
+
+
+function isWinner(feild){
+    // check row wise
+
+    for (let i = 0; i < 3; i++) {
+        if (feild[i][0] === feild[i][1] && feild[i][1] === feild[i][2] && feild[i][0] !== "" && feild[i][1] !== "" && feild[i][2] !== "") {
+            return 0;
+        }
+    }
+    for (let i = 0; i < 3; i++) {
+        if (feild[0][i] === feild[1][i] && feild[1][i] === feild[2][i] &&  feild[0][i] !== "" && feild[1][i] !== "" && feild[2][i] !== "") {
+            return 0;
+        }
+    }
+    if (feild[0][0] === feild[1][1] && feild[1][1] === feild[2][2] && feild[0][0] !== "" && feild[1][1] !== "" && feild[2][2] !== "") {
+        return 0;
+    }
+    if (feild[0][2] === feild[1][1] && feild[1][1] === feild[2][0]  && feild[0][2] !== ""  && feild[1][1] !== ""  && feild[2][0] !== "") {
+        return 0;
+    }
+
+    let count = 0;
+    for(let i=0;i<3;i++)
+    {
+        for(let j=0;j<3;j++)
+        {
+            if(feild[i][j] !== "")
+            count++;
+        }
+    }
+
+    if(count === 9)
+    return 1;
+
+    return -1;
+    //-1 still playing game
+    //0 win
+    //1 draw
+}
